@@ -15,7 +15,7 @@ struct ContentView: View {
     @State private var recording: Bool = false//レコーディングボタンが押されたか押されてないか？
     @State private var content: String = ""//ChatGPTに渡す言葉
     @State private var requesting: Bool = false//ChatGPTへリクエストを出したか出してないか？
-    @State private var response: String = "none"//ChatGPTから帰ってきた言葉
+    @State private var response: String = "none"//ChatGPTから帰ってきた言葉a
     
     
     //音声認識の言語設定設定
