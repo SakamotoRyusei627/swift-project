@@ -8,9 +8,15 @@ import SwiftUI
 import Speech
 import AVFoundation
 
+struct Message: Identifiable {
+    var id = UUID()
+    var message: String
+    var user:String
+}
+
 struct ContentView: View {
-//    @Stateは値が変更されたらViewが再描画される変数を宣言できる。
-//            又structの中で値が変更できる。
+    //    @Stateは値が変更されたらViewが再描画される変数を宣言できる。
+    //            又structの中で値が変更できる。
     @State private var label: String = ""//labelに音声認識で検出した文字が格納される。
     @State private var label2: String = ""//chatGPTから帰ってきた内容を表示
     @State private var buttonTitle: String = "音声入力スタート"
@@ -20,6 +26,7 @@ struct ContentView: View {
     @State private var response: String = "none"//ChatGPTから帰ってきた言葉
     
     @StateObject var viewModel = ContentViewModel()
+    @State private var messageBox:[Message] = []
     
     //音声認識の言語設定設定
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja_JP"))!
@@ -31,50 +38,119 @@ struct ContentView: View {
     @State private var recognitionTask: SFSpeechRecognitionTask?
     
     var body: some View {
+        
         VStack {
-            Text(label)
-                .padding()
-            
-            Button(action: {
-                if recording {
-                    stopSpeechRecognition()
-                } else {
-                    startSpeechRecognition()
+            ScrollViewReader { reader in
+                VStack {
+                    Rectangle()
+                        .foregroundColor(.green)
+                        .frame(height: 50, alignment:.leading)
+                        .overlay(
+                            Text("chatGPT Talker")
+                                .font(.title)
+                        )
+                    
+                    ScrollView {
+                        ForEach(messageBox,id: \.id){ elem in
+                            ZStack{
+                                switch elem.user{
+                                case "chatGPT":
+                                    HStack {
+                                        ZStack(alignment: .topLeading){
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .foregroundColor(.green)
+                                                .frame(width:200)
+                                                .padding(.leading,10)
+                                            VStack(alignment: .leading){
+                                                Text("chatGPT")
+                                                    .padding(.leading,15)
+                                                Text(elem.message)
+                                                    .frame(width: 180,alignment: .leading)
+                                                    .padding(.leading,20)
+                                            }
+                                            
+                                        }
+                                        Spacer()
+                                    }
+                                    
+                                case "my":
+                                    HStack {
+                                        Spacer()
+                                        ZStack(alignment: .topLeading){
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .foregroundColor(.green)
+                                                .frame(width:200)
+                                                .padding(.trailing,10)
+                                            
+                                            VStack(alignment: .leading){
+                                                Text("YOUR NAME")
+                                                Text(elem.message)
+                                                    .frame(width: 180,alignment: .leading)
+                                                    .padding(.leading,10)
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                default:
+                                    Text("")
+                                }
+                            }
+                            
+                        }
+                        Text("").id(30)
+                    }
                 }
-            }) {
-                Text(buttonTitle)
-            }
-            .padding()
-            .disabled(!recognizer.isAvailable)
-            
-            Button(action: {
-                requesting = true
-//                content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字程度で教えてください。"
-                content = "ビーフカレーのレシピを100文字程度で教えてください。"
-                print(content)
-//                content = label
                 
-                Task{
-                    response = await request()
-                    requesting = false
-                    viewModel.onSpeak(label2)
+                //            reader.scrollTo(30)
+                Text(label)
+                Button(action: {
+                    if recording {
+                        stopSpeechRecognition()
+                        reader.scrollTo(30)
+                    } else {
+                        startSpeechRecognition()
+                    }
+                }) {
+                    Text(buttonTitle)
                 }
-            }){
-                Text("ChatGPTへ話しかける")
-            }
-            Text(label2)
-            Button(action: {
-                viewModel.onSpeak(label2)
-            }) {
-                Text(viewModel.isSpeaking ? "停止" : "話す")
+                
+                .padding()
+                .disabled(!recognizer.isAvailable)
+                
+                Button(action: {
+                    requesting = true
+                    content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字以内で教えてください。"
+                    //                content = "ビーフカレーのレシピを100文字程度で教えてください。"
+                    print(content)
+                    //                    content = "文字列の改行には「\\n」を使用して下さい。\(label)"
+                    Task{
+                        if(requesting){
+                            response = await request()
+                        }
+                        requesting = false
+                        viewModel.onSpeak(label2)
+                        viewModel.isSpeaking = false
+                        let newMessage = Message(message: "\(label2)",user:"chatGPT")
+                        messageBox.append(newMessage)
+                        reader.scrollTo(30)
+                        
+                    }
+                    
+                    
+                }){
+                    Text("ChatGPTへ話しかける")
+                }
             }
         }
         .onAppear {
-//            ユーザーから許諾を取るためにダイアログを表示するためのメソッド
+            //            ユーザーから許諾を取るためにダイアログを表示するためのメソッド
             requestAuthorization()
             setupAudioSession()
         }
     }
+    
+    
     
     private func requestAuthorization() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
@@ -126,6 +202,7 @@ struct ContentView: View {
                     DispatchQueue.main.async {
                         self.label = result?.bestTranscription.formattedString ?? ""
                     }
+                    
                 }
             }
             
@@ -140,6 +217,9 @@ struct ContentView: View {
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
         recognitionReq.endAudio()
+        
+        let newMessage = Message(message: "\(label)",user:"my")
+        messageBox.append(newMessage)
         
         recording = false
         recognitionReq = SFSpeechAudioBufferRecognitionRequest()
@@ -157,7 +237,7 @@ struct ContentView: View {
         //URLRequestを作成
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
-        req.allHTTPHeaderFields = ["Authorization" : "Bearer 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"
+        req.allHTTPHeaderFields = ["Authorization" : "Bearer "
                                    ,"OpenAI-Organization": "org-5y3XaXNcdHS6USR5BggTG29v"
                                    ,"Content-Type" : "application/json"]
         req.httpBody = """
@@ -190,17 +270,11 @@ struct ContentView: View {
                    let message = choices.first?["message"] as? [String: Any],
                    let content = message["content"] as? String {
                     label2 = content
-                    // ここでcontentを使用することができます
                 }
             } catch {
                 print("JSONパースエラー: \(error)")
             }
         }
-        
-//        let decoder = JSONDecoder()
-//        guard let employee = try? decoder.decode(ResponseGpt.self, from: response) else {
-//            fatalError("Failed to decode from JSON.")
-//        }
         
         return response
         
