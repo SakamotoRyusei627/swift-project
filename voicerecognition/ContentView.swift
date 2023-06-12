@@ -6,22 +6,28 @@
 //
 import SwiftUI
 import Speech
+import AVFoundation
 
 struct ContentView: View {
 //    @Stateは値が変更されたらViewが再描画される変数を宣言できる。
 //            又structの中で値が変更できる。
     @State private var label: String = ""//labelに音声認識で検出した文字が格納される。
-    @State private var buttonTitle: String = "話しかける"
+    @State private var label2: String = ""//chatGPTから帰ってきた内容を表示
+    @State private var buttonTitle: String = "音声入力スタート"
     @State private var recording: Bool = false//レコーディングボタンが押されたか押されてないか？
     @State private var content: String = ""//ChatGPTに渡す言葉
     @State private var requesting: Bool = false//ChatGPTへリクエストを出したか出してないか？
-    @State private var response: String = "none"//ChatGPTから帰ってきた言葉a
+    @State private var response: String = "none"//ChatGPTから帰ってきた言葉
     
+    @StateObject var viewModel = ContentViewModel()
     
     //音声認識の言語設定設定
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja_JP"))!
+    //オーディオ ノードのグラフを管理し、再生を制御し、リアルタイム レンダリング制約を構成するオブジェクト。
     private let audioEngine = AVAudioEngine()
+    //デバイスのマイクからの音声など、キャプチャされた音声コンテンツから音声を認識するリクエスト。
     @State private var recognitionReq = SFSpeechAudioBufferRecognitionRequest()
+    //音声認識の進行状況を監視するためのタスク オブジェクト。
     @State private var recognitionTask: SFSpeechRecognitionTask?
     
     var body: some View {
@@ -43,14 +49,24 @@ struct ContentView: View {
             
             Button(action: {
                 requesting = true
-                content = label
+//                content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字程度で教えてください。"
+                content = "ビーフカレーのレシピを100文字程度で教えてください。"
+                print(content)
+//                content = label
                 
                 Task{
                     response = await request()
                     requesting = false
+                    viewModel.onSpeak(label2)
                 }
             }){
-                Text("ChatGPTへ")
+                Text("ChatGPTへ話しかける")
+            }
+            Text(label2)
+            Button(action: {
+                viewModel.onSpeak(label2)
+            }) {
+                Text(viewModel.isSpeaking ? "停止" : "話す")
             }
         }
         .onAppear {
@@ -64,7 +80,7 @@ struct ContentView: View {
         SFSpeechRecognizer.requestAuthorization { authStatus in
             DispatchQueue.main.async {
                 if authStatus == .authorized && self.recognizer.isAvailable {
-                    self.buttonTitle = "音声認識の開始"
+                    self.buttonTitle = "音声入力スタート"
                 } else {
                     self.buttonTitle = "音声認識は利用不可"
                 }
@@ -114,7 +130,7 @@ struct ContentView: View {
             }
             
             recording = true
-            buttonTitle = "音声認識の停止"
+            buttonTitle = "音声入力ストップ"
         } catch {
             print(error.localizedDescription)
         }
@@ -127,9 +143,10 @@ struct ContentView: View {
         
         recording = false
         recognitionReq = SFSpeechAudioBufferRecognitionRequest()
-        buttonTitle = "音声認識の開始"
+        buttonTitle = "音声入力スタート"
     }
     
+    //ChatGPTへリクエスト
     private func request() async -> String{
         
         //URL
@@ -140,7 +157,7 @@ struct ContentView: View {
         //URLRequestを作成
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
-        req.allHTTPHeaderFields = ["Authorization" : "Bearer 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"
+        req.allHTTPHeaderFields = ["Authorization" : "Bearer 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"
                                    ,"OpenAI-Organization": "org-5y3XaXNcdHS6USR5BggTG29v"
                                    ,"Content-Type" : "application/json"]
         req.httpBody = """
@@ -172,7 +189,7 @@ struct ContentView: View {
                    let choices = json["choices"] as? [[String: Any]],
                    let message = choices.first?["message"] as? [String: Any],
                    let content = message["content"] as? String {
-                    print(content)
+                    label2 = content
                     // ここでcontentを使用することができます
                 }
             } catch {
@@ -190,14 +207,49 @@ struct ContentView: View {
     }
 }
 
-//@main
-//struct SpeechRecognitionApp: App {
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//    }
-//}
+
+
+class ContentViewModel : NSObject, ObservableObject , AVSpeechSynthesizerDelegate{
+    let locale = "ja-JP"
+    let synthesizer = AVSpeechSynthesizer()
+    lazy var defaultVoice = AVSpeechSynthesisVoice.init(identifier:"com.apple.ttsbundle.siri_O-rin_ja-JP_compact")
+    @Published var isSpeaking = false
+    
+    override init(){
+        super.init()
+        synthesizer.delegate = self
+    }
+    func onSpeak(_ text:String){
+        if isSpeaking {
+            stop()
+        }else{
+            speak(text,voice:defaultVoice)
+        }
+    }
+    
+    func stop(){
+        if synthesizer.isSpeaking {
+            synthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
+        }
+        self.isSpeaking = false
+    }
+    func speak(_ text: String, voice:AVSpeechSynthesisVoice?){
+        // テキストの設定
+        let utterance = AVSpeechUtterance.init(string: text)
+        // 音声の設定
+        utterance.voice = voice
+        // 声の高さ(0.5〜2.0)
+        utterance.pitchMultiplier = 1
+        // 音量(0.0〜1.0)
+        utterance.volume = 1
+        // 読み上げスピード(0.0〜1.0)
+        utterance.rate = 0.5
+        // 話す
+        synthesizer.speak(utterance)
+        // ステータス変更
+        self.isSpeaking = true
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
