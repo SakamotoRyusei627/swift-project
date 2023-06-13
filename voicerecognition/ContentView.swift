@@ -15,6 +15,7 @@ struct Message: Identifiable {
 }
 
 struct ContentView: View {
+    @Binding var request: String
     //    @Stateは値が変更されたらViewが再描画される変数を宣言できる。
     //            又structの中で値が変更できる。
     @State private var label: String = ""//labelに音声認識で検出した文字が格納される。
@@ -40,6 +41,7 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
+            Text(request)
             ScrollViewReader { reader in
                 VStack {
                     Rectangle()
@@ -120,10 +122,11 @@ struct ContentView: View {
                 
                 Button(action: {
                     requesting = true
-                    content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字以内で教えてください。"
+//                    content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字以内で教えて。"
                     //                content = "ビーフカレーのレシピを100文字程度で教えてください。"
+                    
+                    content = "文字列の改行には「\\n」を使用して下さい。以降の内容に対して\(request)\(label)。"
                     print(content)
-                    //                    content = "文字列の改行には「\\n」を使用して下さい。\(label)"
                     Task{
                         if(requesting){
                             response = await request()
@@ -325,8 +328,8 @@ class ContentViewModel : NSObject, ObservableObject , AVSpeechSynthesizerDelegat
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
