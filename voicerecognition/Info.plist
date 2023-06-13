@@ -5,8 +5,8 @@
 	<key>Private - Microphone Usabe Description</key>
 	<string>マイクに使用します。</string>
 	<key>Private - Speech Recognition Usage Description</key>
-	<string>音声認識に使用します。</string>
+	<string>音声出力に使用します。</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>これは何？</string>
+	<string>音声出力に使用します。</string>
 </dict>
 </plist>

@@ -16,6 +16,7 @@ struct Message: Identifiable {
 
 struct ContentView: View {
     @Binding var request: String
+    @State var showingIndicator = false
     //    @Stateは値が変更されたらViewが再描画される変数を宣言できる。
     //            又structの中で値が変更できる。
     @State private var label: String = ""//labelに音声認識で検出した文字が格納される。
@@ -39,18 +40,17 @@ struct ContentView: View {
     @State private var recognitionTask: SFSpeechRecognitionTask?
     
     var body: some View {
-        
         VStack {
-            Text(request)
+            Rectangle()
+                .foregroundColor(.green)
+                .frame(height: 50, alignment:.leading)
+                .overlay(
+                    Text("chatGPT Talker")
+                        .font(.title)
+                )
             ScrollViewReader { reader in
                 VStack {
-                    Rectangle()
-                        .foregroundColor(.green)
-                        .frame(height: 50, alignment:.leading)
-                        .overlay(
-                            Text("chatGPT Talker")
-                                .font(.title)
-                        )
+                    
                     
                     ScrollView {
                         ForEach(messageBox,id: \.id){ elem in
@@ -60,7 +60,7 @@ struct ContentView: View {
                                     HStack {
                                         ZStack(alignment: .topLeading){
                                             RoundedRectangle(cornerRadius: 5)
-                                                .foregroundColor(.green)
+                                                .foregroundColor(.mint)
                                                 .frame(width:200)
                                                 .padding(.leading,10)
                                             VStack(alignment: .leading){
@@ -85,7 +85,7 @@ struct ContentView: View {
                                                 .padding(.trailing,10)
                                             
                                             VStack(alignment: .leading){
-                                                Text("YOUR NAME")
+                                                Text("YOUR")
                                                 Text(elem.message)
                                                     .frame(width: 180,alignment: .leading)
                                                     .padding(.leading,10)
@@ -103,7 +103,9 @@ struct ContentView: View {
                         Text("").id(30)
                     }
                 }
-                
+                if showingIndicator {
+                    ActivityIndicator()
+                }
                 //            reader.scrollTo(30)
                 Text(label)
                 Button(action: {
@@ -125,13 +127,17 @@ struct ContentView: View {
 //                    content = "文字列の改行には「\\n」を使用し、ビーフカレーのレシピを100文字以内で教えて。"
                     //                content = "ビーフカレーのレシピを100文字程度で教えてください。"
                     
-                    content = "文字列の改行には「\\n」を使用して下さい。以降の内容に対して\(request)\(label)。"
+                    content = "文字列の改行には「\\n」を使用して下さい。50文字以内でお願いします。以降の内容に対して\(request)\(label)。"
                     print(content)
                     Task{
                         if(requesting){
+                            showingIndicator.toggle()
                             response = await request()
+                            showingIndicator.toggle()
+                            
                         }
                         requesting = false
+                        
                         viewModel.onSpeak(label2)
                         viewModel.isSpeaking = false
                         let newMessage = Message(message: "\(label2)",user:"chatGPT")
@@ -178,6 +184,7 @@ struct ContentView: View {
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
+            print("setupAudioSessionエラー")
             print(error.localizedDescription)
         }
     }
@@ -200,6 +207,7 @@ struct ContentView: View {
             try audioEngine.start()
             recognitionTask = recognizer.recognitionTask(with: recognitionReq) { result, error in
                 if let error = error {
+                    print("recognitionTaskエラー")
                     print("\(error)")
                 } else {
                     DispatchQueue.main.async {
@@ -212,6 +220,7 @@ struct ContentView: View {
             recording = true
             buttonTitle = "音声入力ストップ"
         } catch {
+            print("startSpeechRecognitionエラー")
             print(error.localizedDescription)
         }
     }
@@ -240,7 +249,7 @@ struct ContentView: View {
         //URLRequestを作成
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
-        req.allHTTPHeaderFields = ["Authorization" : "Bearer "
+        req.allHTTPHeaderFields = ["Authorization" : "Bearer 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"
                                    ,"OpenAI-Organization": "org-5y3XaXNcdHS6USR5BggTG29v"
                                    ,"Content-Type" : "application/json"]
         req.httpBody = """
@@ -275,6 +284,7 @@ struct ContentView: View {
                     label2 = content
                 }
             } catch {
+                print("JSONエラー")
                 print("JSONパースエラー: \(error)")
             }
         }
@@ -328,8 +338,3 @@ class ContentViewModel : NSObject, ObservableObject , AVSpeechSynthesizerDelegat
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}

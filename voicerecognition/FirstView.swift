@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FirstView: View {
+    @State var showingIndicator = false
     @State var requestQuestion = "あなたに質問したいです。"
     @State var requestConsult = "あなたに相談したいです。"
     @State var requestTalk = "あなたと会話したいです。"
@@ -52,18 +53,15 @@ struct FirstView: View {
                         )
                 }
             }
-            .padding()
             .navigationTitle("chatGPTに・・・")
         }
         
     }
     
-//    private func setRequest(_ text:String){
-//        print(text)
-//        request = text
-//    }
     
 }
+
+
 
 
 struct FirstView_Previews: PreviewProvider {
