@@ -6,7 +6,5 @@
 	<string>マイクに使用します。</string>
 	<key>Private - Speech Recognition Usage Description</key>
 	<string>音声出力に使用します。</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>音声出力に使用します。</string>
 </dict>
 </plist>

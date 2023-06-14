@@ -13,7 +13,41 @@
 		1BF2110A2A35A5FE00828F3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BF211092A35A5FE00828F3D /* Preview Assets.xcassets */; };
 		1BF2112E2A3762D200828F3D /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2112D2A3762D200828F3D /* FirstView.swift */; };
 		1BF211302A382F3200828F3D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2112F2A382F3200828F3D /* ActivityIndicator.swift */; };
+		1BF211562A38494400828F3D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF211552A38494400828F3D /* WidgetKit.framework */; };
+		1BF211582A38494400828F3D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF211572A38494400828F3D /* SwiftUI.framework */; };
+		1BF2115B2A38494400828F3D /* chatGPTBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2115A2A38494400828F3D /* chatGPTBundle.swift */; };
+		1BF2115D2A38494400828F3D /* chatGPTLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2115C2A38494400828F3D /* chatGPTLiveActivity.swift */; };
+		1BF2115F2A38494400828F3D /* chatGPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2115E2A38494400828F3D /* chatGPT.swift */; };
+		1BF211622A38494500828F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BF211612A38494500828F3D /* Assets.xcassets */; };
+		1BF211642A38494500828F3D /* chatGPT.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 1BF211602A38494400828F3D /* chatGPT.intentdefinition */; };
+		1BF211652A38494500828F3D /* chatGPT.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 1BF211602A38494400828F3D /* chatGPT.intentdefinition */; };
+		1BF211682A38494500828F3D /* chatGPTExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1BF211532A38494400828F3D /* chatGPTExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1BF2116E2A393FF900828F3D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2116D2A393FF900828F3D /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1BF211662A38494500828F3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BF210F72A35A5FE00828F3D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BF211522A38494400828F3D;
+			remoteInfo = chatGPTExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1BF211692A38494500828F3D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1BF211682A38494500828F3D /* chatGPTExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1BF210FF2A35A5FE00828F3D /* voicerecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voicerecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +58,16 @@
 		1BF211102A35A6E700828F3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1BF2112D2A3762D200828F3D /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		1BF2112F2A382F3200828F3D /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		1BF211532A38494400828F3D /* chatGPTExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = chatGPTExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BF211552A38494400828F3D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		1BF211572A38494400828F3D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		1BF2115A2A38494400828F3D /* chatGPTBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatGPTBundle.swift; sourceTree = "<group>"; };
+		1BF2115C2A38494400828F3D /* chatGPTLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatGPTLiveActivity.swift; sourceTree = "<group>"; };
+		1BF2115E2A38494400828F3D /* chatGPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatGPT.swift; sourceTree = "<group>"; };
+		1BF211602A38494400828F3D /* chatGPT.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = chatGPT.intentdefinition; sourceTree = "<group>"; };
+		1BF211612A38494500828F3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1BF211632A38494500828F3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BF2116D2A393FF900828F3D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +78,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1BF211502A38494400828F3D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BF211582A38494400828F3D /* SwiftUI.framework in Frameworks */,
+				1BF211562A38494400828F3D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -41,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				1BF211012A35A5FE00828F3D /* voicerecognition */,
+				1BF211592A38494400828F3D /* chatGPT */,
+				1BF211542A38494400828F3D /* Frameworks */,
 				1BF211002A35A5FE00828F3D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				1BF210FF2A35A5FE00828F3D /* voicerecognition.app */,
+				1BF211532A38494400828F3D /* chatGPTExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +116,7 @@
 				1BF211022A35A5FE00828F3D /* voicerecognitionApp.swift */,
 				1BF211042A35A5FE00828F3D /* ContentView.swift */,
 				1BF2112D2A3762D200828F3D /* FirstView.swift */,
+				1BF2116D2A393FF900828F3D /* SceneDelegate.swift */,
 				1BF2112F2A382F3200828F3D /* ActivityIndicator.swift */,
 				1BF211062A35A5FE00828F3D /* Assets.xcassets */,
 				1BF211082A35A5FE00828F3D /* Preview Content */,
@@ -75,6 +132,28 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		1BF211542A38494400828F3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BF211552A38494400828F3D /* WidgetKit.framework */,
+				1BF211572A38494400828F3D /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1BF211592A38494400828F3D /* chatGPT */ = {
+			isa = PBXGroup;
+			children = (
+				1BF2115A2A38494400828F3D /* chatGPTBundle.swift */,
+				1BF2115C2A38494400828F3D /* chatGPTLiveActivity.swift */,
+				1BF2115E2A38494400828F3D /* chatGPT.swift */,
+				1BF211602A38494400828F3D /* chatGPT.intentdefinition */,
+				1BF211612A38494500828F3D /* Assets.xcassets */,
+				1BF211632A38494500828F3D /* Info.plist */,
+			);
+			path = chatGPT;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,15 +164,34 @@
 				1BF210FB2A35A5FE00828F3D /* Sources */,
 				1BF210FC2A35A5FE00828F3D /* Frameworks */,
 				1BF210FD2A35A5FE00828F3D /* Resources */,
+				1BF211692A38494500828F3D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1BF211672A38494500828F3D /* PBXTargetDependency */,
 			);
 			name = voicerecognition;
 			productName = voicerecognition;
 			productReference = 1BF210FF2A35A5FE00828F3D /* voicerecognition.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1BF211522A38494400828F3D /* chatGPTExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BF2116C2A38494500828F3D /* Build configuration list for PBXNativeTarget "chatGPTExtension" */;
+			buildPhases = (
+				1BF2114F2A38494400828F3D /* Sources */,
+				1BF211502A38494400828F3D /* Frameworks */,
+				1BF211512A38494400828F3D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = chatGPTExtension;
+			productName = chatGPTExtension;
+			productReference = 1BF211532A38494400828F3D /* chatGPTExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -106,6 +204,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					1BF210FE2A35A5FE00828F3D = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					1BF211522A38494400828F3D = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -124,6 +225,7 @@
 			projectRoot = "";
 			targets = (
 				1BF210FE2A35A5FE00828F3D /* voicerecognition */,
+				1BF211522A38494400828F3D /* chatGPTExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -138,6 +240,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1BF211512A38494400828F3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BF211622A38494500828F3D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -147,12 +257,33 @@
 			files = (
 				1BF211302A382F3200828F3D /* ActivityIndicator.swift in Sources */,
 				1BF211052A35A5FE00828F3D /* ContentView.swift in Sources */,
+				1BF211652A38494500828F3D /* chatGPT.intentdefinition in Sources */,
 				1BF2112E2A3762D200828F3D /* FirstView.swift in Sources */,
 				1BF211032A35A5FE00828F3D /* voicerecognitionApp.swift in Sources */,
+				1BF2116E2A393FF900828F3D /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BF2114F2A38494400828F3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BF211642A38494500828F3D /* chatGPT.intentdefinition in Sources */,
+				1BF2115D2A38494400828F3D /* chatGPTLiveActivity.swift in Sources */,
+				1BF2115B2A38494400828F3D /* chatGPTBundle.swift in Sources */,
+				1BF2115F2A38494400828F3D /* chatGPT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1BF211672A38494500828F3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1BF211522A38494400828F3D /* chatGPTExtension */;
+			targetProxy = 1BF211662A38494500828F3D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1BF2110B2A35A5FE00828F3D /* Debug */ = {
@@ -272,6 +403,7 @@
 		1BF2110E2A35A5FE00828F3D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -281,6 +413,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = voicerecognition/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChatGPTTaker;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "音声出力に使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,6 +436,7 @@
 		1BF2110F2A35A5FE00828F3D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -311,6 +446,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = voicerecognition/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChatGPTTaker;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "音声出力に使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -323,6 +460,60 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryusei.voicerecognition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1BF2116A2A38494500828F3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5AC5XG84XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = chatGPT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = chatGPT;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryusei.voicerecognition.chatGPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1BF2116B2A38494500828F3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5AC5XG84XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = chatGPT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = chatGPT;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryusei.voicerecognition.chatGPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -346,6 +537,15 @@
 			buildConfigurations = (
 				1BF2110E2A35A5FE00828F3D /* Debug */,
 				1BF2110F2A35A5FE00828F3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1BF2116C2A38494500828F3D /* Build configuration list for PBXNativeTarget "chatGPTExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BF2116A2A38494500828F3D /* Debug */,
+				1BF2116B2A38494500828F3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

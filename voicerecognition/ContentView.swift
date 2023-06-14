@@ -85,7 +85,7 @@ struct ContentView: View {
                                                 .padding(.trailing,10)
                                             
                                             VStack(alignment: .leading){
-                                                Text("YOUR")
+                                                Text("YOU")
                                                 Text(elem.message)
                                                     .frame(width: 180,alignment: .leading)
                                                     .padding(.leading,10)
@@ -249,7 +249,7 @@ struct ContentView: View {
         //URLRequestを作成
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
-        req.allHTTPHeaderFields = ["Authorization" : "Bearer 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"
+        req.allHTTPHeaderFields = ["Authorization" : "Bearer "
                                    ,"OpenAI-Organization": "org-5y3XaXNcdHS6USR5BggTG29v"
                                    ,"Content-Type" : "application/json"]
         req.httpBody = """
