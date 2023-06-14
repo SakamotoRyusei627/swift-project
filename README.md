@@ -1,4 +1,4 @@
-# オセロゲーム
+# ChatGPT_Talker
 
 ## 目次
 
@@ -15,7 +15,7 @@
 1.  `ContentView.swift`を開き、`"Authorization" : "Bearer API_KEY"`へ設定する。
 1.  ビルドすれば、セットアップ完了
 
-## アプリ詳細
+## アプリの詳細
 
 ### 目的
 
